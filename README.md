@@ -55,7 +55,7 @@ If none match all 10 → no winner.
 
 ▶️ How to Run
 Step 1: Clone the Repository
-git clone https://github.com/your-username/number-match-game.git
+git clone 
 
 Step 2: Navigate to the Project Folder
 cd number-match-game
