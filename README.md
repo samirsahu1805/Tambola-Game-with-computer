@@ -1,117 +1,81 @@
-# Tambola-Game-with-computer
-🎮 Number Match Game – Player vs Computer
+import random
 
-A simple Python console-based number matching game where a real player competes against the computer.
+def get_user_numbers():
+    print("Enter your 10 unique numbers (between 1 and 50):")
+    user_numbers = set()
 
-The game generates 10 random numbers.
-Both the player and the computer have 10 unique numbers.
-Numbers are called one by one.
-If all 10 numbers of a player are matched, they win.
+    while len(user_numbers) < 10:
+        try:
+            num = int(input(f"Enter number {len(user_numbers) + 1}: "))
+            if 1 <= num <= 50:
+                if num not in user_numbers:
+                    user_numbers.add(num)
+                else:
+                    print("Number already entered. Choose a different number.")
+            else:
+                print("Number must be between 1 and 50.")
+        except ValueError:
+            print("Please enter a valid number.")
 
-📌 Features
-
-1 Human Player vs 1 Computer
-
-User manually selects 10 numbers
-
-Computer auto-generates 10 numbers
-
-Random generation of 10 game numbers
-
-Number calling system (one by one)
-
-Automatic marking of matched numbers
-
-Winner detection logic
-
-Draw condition supported
-
-Input validation included
-
-🛠️ Technologies Used
-
-Python 3
-
-random module
-
-Console-based interface
-
-🎯 Game Rules
-
-The user enters 10 unique numbers between 1 and 50.
-
-The computer automatically generates 10 unique random numbers.
-
-The system generates 10 random game numbers.
-
-Numbers are called one by one.
-
-If a called number exists in a player's list, it is marked.
-
-If all 10 numbers of a player are matched → that player wins.
-
-If both match all 10 → it is a draw.
-
-If none match all 10 → no winner.
-
-▶️ How to Run
-Step 1: Clone the Repository
-git clone https://github.com/your-username/number-match-game.git
-
-Step 2: Navigate to the Project Folder
-cd number-match-game
-
-Step 3: Run the Program
-python game.py
+    return user_numbers
 
 
-(Replace game.py with your actual file name if different.)
+def play_game():
+    # Generate game numbers
+    game_numbers = random.sample(range(1, 51), 10)
 
-🧠 Example Gameplay
-Enter your 10 unique numbers (between 1 and 50):
-Enter number 1: 5
-Enter number 2: 12
-...
+    # Get user numbers
+    user_numbers = get_user_numbers()
+    user_marked = set()
 
-Number Called: 5
-You marked 5
-Computer marked 5
+    # Computer numbers
+    computer_numbers = set(random.sample(range(1, 51), 10))
+    computer_marked = set()
 
-Your matched count: 1/10
-Computer matched count: 1/10
+    print("\n🎯 Game Numbers Generated (Hidden, will be called one by one)")
+    print("\nYour Numbers:", sorted(user_numbers))
+    print("Computer Numbers:", sorted(computer_numbers))
 
-📂 Project Structure
-number-match-game/
-│
-├── game.py
-└── README.md
+    print("\n📣 Number Calling Starts...\n")
 
-🔍 Concepts Used
+    user_winner = False
+    computer_winner = False
 
-Sets for fast number lookup
+    for number in game_numbers:
+        input("Press Enter to call next number...")
+        print(f"Number Called: {number}")
 
-Random number generation
+        # Check User
+        if number in user_numbers:
+            user_marked.add(number)
+            print("You marked", number)
 
-Input validation
+        # Check Computer
+        if number in computer_numbers:
+            computer_marked.add(number)
+            print("Computer marked", number)
 
-Conditional logic
+        print(f"Your matched count: {len(user_marked)}/10")
+        print(f"Computer matched count: {len(computer_marked)}/10")
+        print("-" * 40)
 
-Loop control structures
+    # Final Result
+    if user_marked == user_numbers:
+        user_winner = True
+    if computer_marked == computer_numbers:
+        computer_winner = True
 
-🚀 Future Improvements
+    print("\n Game Over!\n")
 
-GUI version using Tkinter
+    if user_winner and computer_winner:
+        print(" It's a DRAW!")
+    elif user_winner:
+        print(" Congratulations! You WIN!")
+    elif computer_winner:
+        print(" Computer Wins!")
+    else:
+        print("No one matched all 10 numbers.")
 
-Multiplayer mode
 
-Score tracking system
-
-Replay feature
-
-Sound effects
-
-Web-based version
-
-📜 License
-
-This project is open-source and available under the MIT License.
+if __name__ == "__main__":
+    play_game()
